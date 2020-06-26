@@ -16,6 +16,8 @@ val junitVersion = "5.3.2"
 dependencies {
   implementation("io.vertx:vertx-core:$vertxVersion")
   implementation("io.vertx:vertx-web:$vertxVersion")
+  implementation("io.vertx:vertx-infinispan:$vertxVersion")
+  implementation("io.vertx:vertx-config:$vertxVersion")
 
   testImplementation("io.vertx:vertx-junit5:$vertxVersion")
   testImplementation("io.vertx:vertx-web-client:$vertxVersion")
@@ -29,6 +31,7 @@ java {
 
 application {
   mainClassName = "io.vertx.core.Launcher"
+
 }
 
 val mainVerticleName = "br.com.silva.vertx.demo.MainVerticle"
@@ -51,6 +54,12 @@ tasks {
     }
     mergeServiceFiles {
       include("META-INF/services/io.vertx.core.spi.VerticleFactory")
+    }
+  }
+
+  withType<Jar> {
+    manifest {
+      attributes["Main-Verticle"] = mainVerticleName
     }
   }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="br.com.silva.vertx.demo.MainVerticleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-06-26T14:14:22" hostname="lenovo-pc" time="0.52">
+<testsuite name="br.com.silva.vertx.demo.MainVerticleTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-06-26T16:38:09" hostname="lenovo-pc" time="0.708">
   <properties/>
-  <testcase name="checkServerHasStarted(Vertx, VertxTestContext)" classname="br.com.silva.vertx.demo.MainVerticleTest" time="0.52"/>
+  <testcase name="checkServerReturnHello(Vertx, VertxTestContext)" classname="br.com.silva.vertx.demo.MainVerticleTest" time="0.634"/>
+  <testcase name="checkServerReturnHelloByName(Vertx, VertxTestContext)" classname="br.com.silva.vertx.demo.MainVerticleTest" time="0.071"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

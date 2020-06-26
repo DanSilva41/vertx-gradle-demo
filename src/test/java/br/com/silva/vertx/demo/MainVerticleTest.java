@@ -22,15 +22,29 @@ class MainVerticleTest {
   }
 
   @Test
-  @DisplayName("Check that the server has started")
-  void checkServerHasStarted(Vertx vertx, VertxTestContext testContext) {
+  @DisplayName("Check that the server return hello Vert.x")
+  void checkServerReturnHello(Vertx vertx, VertxTestContext testContext) {
     WebClient webClient = WebClient.create(vertx);
-    webClient.get(8280, "localhost", "/")
+    webClient.get(8280, "localhost", "/api/v1/hello")
       .as(BodyCodec.string())
       .send(testContext.succeeding(response -> testContext.verify(() -> {
         assertEquals(200, response.statusCode());
         assertTrue(response.body().length() > 0);
-        assertTrue(response.body().contains("Hello, I'm trying Vert.x"));
+        assertTrue(response.body().contains("Hello, I'm trying Vert.x with routers and eventBus"));
+        testContext.completeNow();
+      })));
+  }
+
+  @Test
+  @DisplayName("Check that the server return hello by name")
+  void checkServerReturnHelloByName(Vertx vertx, VertxTestContext testContext) {
+    WebClient webClient = WebClient.create(vertx);
+    webClient.get(8280, "localhost", "/api/v1/hello/Dan")
+      .as(BodyCodec.string())
+      .send(testContext.succeeding(response -> testContext.verify(() -> {
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().length() > 0);
+        assertTrue(response.body().contains("Hello Dan, you're trying Vert.x with routers and eventBus"));
         testContext.completeNow();
       })));
   }
