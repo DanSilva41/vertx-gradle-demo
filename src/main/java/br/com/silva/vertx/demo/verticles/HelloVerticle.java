@@ -12,7 +12,7 @@ public class HelloVerticle extends AbstractVerticle {
 
     vertx.eventBus().consumer(Constants.HELLO_NAME_VERTX_ADDRESS, msg -> {
       String name = (String) msg.body();
-      msg.reply(String.format("Hello %s, you're trying Vert.x with routers", name));
+      msg.reply(String.format("Hello %s, you're trying Vert.x with routers and eventBus", name));
     });
   }
 }
