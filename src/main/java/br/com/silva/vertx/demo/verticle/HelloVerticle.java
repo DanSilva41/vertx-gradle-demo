@@ -1,4 +1,4 @@
-package br.com.silva.vertx.demo.verticles;
+package br.com.silva.vertx.demo.verticle;
 
 import br.com.silva.vertx.demo.support.Constants;
 import io.vertx.core.AbstractVerticle;
