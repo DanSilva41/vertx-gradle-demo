@@ -12,7 +12,9 @@ import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.handler.*;
+import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.ext.web.sstore.SessionStore;
 
 import java.util.UUID;
 
@@ -23,10 +25,14 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> start) {
     Router router = Router.router(vertx);
-
+    SessionStore store = LocalSessionStore.create(vertx);
+    router.route().handler(LoggerHandler.create());
+    router.route().handler(SessionHandler.create(store));
+    router.route().handler(CorsHandler.create("localhost"));
     router.route().handler(StaticHandler.create("web").setIndexPage("index.html"));
+    router.route().handler(CSRFHandler.create("anySecret"));
 
-    router.route().handler(this::createIndex);
+    router.route().handler(this::verifyAuthToken);
     router.get("/api/v1/hello").handler(HelloHandler::helloVertx);
     router.get("/api/v1/hello/:name").handler(HelloHandler::helloName);
 
@@ -34,7 +40,7 @@ public class MainVerticle extends AbstractVerticle {
     this.configureServer(router, start);
   }
 
-  private void createIndex(RoutingContext routingContext) {
+  private void verifyAuthToken(RoutingContext routingContext) {
     String authToken = routingContext.request().getHeader("AUTH_TOKEN");
     if ("mysecretAuthToken".contentEquals(authToken)) {
       routingContext.next();

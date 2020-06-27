@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  database:
+    image: "postgres"
+    hostname: psql
+    ports:
+      - "5433:5433"
+    env_file:
+      - database.env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+
+volumes:
+  database-data:
+    driver: local
